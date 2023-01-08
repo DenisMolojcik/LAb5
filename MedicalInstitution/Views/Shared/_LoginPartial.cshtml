@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-controller="Account" asp-action="Logout">
+            <button type="submit" class="nav-link btn btn-link text-dark">Выйти из учетной записи</button>
+        </form>
+    </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a>
+        </li>
+    if (User.IsInRole("admin"))
+    {
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Roles" asp-action="Index">Роли</a>
+        </li>
+    }
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Therapy" asp-action="Index">Терапии</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Diseases" asp-action="Index">Болезни</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Doctors" asp-action="Index">Докторы</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Patients" asp-action="Index">Пациенты</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Medicians" asp-action="Index">Медикаменты</a>
+    </li>
+}
+    else 
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+    </li>
+}
+</ul>

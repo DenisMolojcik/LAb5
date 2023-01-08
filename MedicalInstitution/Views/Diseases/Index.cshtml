@@ -1,0 +1,75 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<Disease>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Болезни</h1>
+
+<p>
+    <a asp-action="Create">Добавить болезнь</a>
+</p>
+@using (Html.BeginForm())
+{
+    <p>Введите название болезни: </p>
+    @Html.TextBox("searchName", ViewBag.CurrentFilter as string)
+    <p><input type="submit" value="Отправить" /></p>
+}
+<a asp-action="Index" asp-route-reset="true">
+    Сбросить
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDisease="@ViewBag.DsName">
+                    Название болезнь
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDisease="@ViewBag.DsDuration">
+                    Продолжительность
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDisease="@ViewBag.DsSymptom">
+                    Симптомы
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDisease="@ViewBag.DsConsequence">
+                    Последствие
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Symptom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consequence)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DiseaseId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.DiseaseId">Подробности</a> |
+                <a asp-action="Delete" asp-route-id="@item.DiseaseId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortStateDisease = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter }), new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }})

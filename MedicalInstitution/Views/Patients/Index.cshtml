@@ -1,0 +1,131 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<Patient>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Пациенты</h1>
+
+<p>
+    <a asp-action="Create">Добавить пациента</a>
+</p>
+@using (Html.BeginForm())
+{
+    <p>Введите фамилию пациента: </p>
+    @Html.TextBox("searchPatientName", ViewBag.CurrentFilter as string)
+    <p><input type="submit" value="Отправить" /></p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatSurname">
+                    Фамилия
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatName">
+                    Имя
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatLastname">
+                    Фамилия
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatAge">
+                    Возраст
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatGender">
+                    Пол
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatPhoneNumber">
+                    Телефон
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatDateHospit">
+                    Дата госпитализации
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatDischarge">
+                    Дата выписки
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatDiagnos">
+                    Диагноз
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatDepartment">
+                    Должность
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStatePatient="@ViewBag.PatResultTreatment">
+                    Результат лечения
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateHospitalisation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDischarge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResultTreatment)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PatientId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.PatientId">Подробности</a> |
+                <a asp-action="Delete" asp-route-id="@item.PatientId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortStatePatient = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter }), new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }})

@@ -1,0 +1,101 @@
+﻿@using MedicalInstitution.ViewsModels
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<MedicianView>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Медикаменты</h1>
+
+<p>
+    <a asp-action="Create">Добавить медикаменты</a>
+</p>
+@using (Html.BeginForm())
+{
+    <p>Введите навание медикамента: </p>
+    @Html.TextBox("searchMedicianName", ViewBag.CurrentFilter as string)
+    <p><input type="submit" value="Отправить" /></p>
+}
+<a asp-action="Index" asp-route-reset="true">
+    Сбросить
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortStateMedician="@ViewBag.MedName">
+                    Название медикамента
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateMedician="@ViewBag.MedIndication">
+                    Показания
+                </a>
+            </th>
+            <th>
+                Противопоказания
+            </th>
+            <th>
+                Производитель
+            </th>
+            <th>
+                Упаковка
+            </th>
+            <th>
+                Доза
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateMedician="@ViewBag.MedCost">
+                    Цена
+                </a>
+            </th>
+            <th>
+                Дата
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Indication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contraindicat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Packaging)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dasage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MedicianId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.MedicianId">Подробности</a> |
+                <a asp-action="Delete" asp-route-id="@item.MedicianId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortStateMedician = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter }), new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }})

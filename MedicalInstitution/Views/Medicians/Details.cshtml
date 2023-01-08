@@ -1,0 +1,60 @@
+﻿@model MedicalInstitution.Models.Medician
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Подробности</h1>
+
+<div>
+    <h4>Медикаменты</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Indication)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Indication)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Contraindicat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Contraindicat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Manufacturer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Packaging)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Packaging)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Dasage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Dasage)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CostMediciane)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CostMediciane.CostMedicianeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MedicianId">Изменить</a> |
+    <a asp-action="Index">Вернуться</a>
+</div>

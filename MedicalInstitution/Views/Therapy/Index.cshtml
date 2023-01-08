@@ -1,0 +1,70 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@using MedicalInstitution.ViewsModels
+@model X.PagedList.IPagedList<TherapyView>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Страница терапии</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Создать терапию</a>
+    </p>
+    @using (Html.BeginForm())
+    {
+        <p>Введите имя доктора: </p>
+        @Html.TextBox("searchDoctorName", ViewBag.CurrentFilter as string)
+        <p><input type="submit" value="Отправить" /></p>
+    }
+    <a asp-action="Index" asp-route-reset="true">
+        Сбросить
+    </a>
+    <table border="1">
+        <caption>Терапии</caption>
+        <tr>
+            <td>Id</td>
+            <th>
+                <a asp-action="Index" asp-route-sortStateTherapy="@ViewBag.DiseaseName">
+                    Болезнь
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateTherapy="@ViewBag.MedicianName">
+                    Медикаменты
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateTherapy="@ViewBag.DoctorName">
+                    Имя доктора
+                </a>
+            </th>
+            <td>Имя пациента</td>
+            <td>Дата</td>
+            <td></td>
+        </tr>
+        @foreach (var therapy in Model)
+        {
+            <tr>
+                <td>@therapy.Id</td>
+                <td>@therapy.DiseaseName</td>
+                <td>@therapy.MedicianName</td>
+                <td>@therapy.DoctorName</td>
+                <td>@therapy.PatientName</td>
+                <td>@therapy.Date</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@therapy.Id">Изменить</a> |
+                    <a asp-action="Delete" asp-route-id="@therapy.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortStateTherapy = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter }), new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }})
+</html>

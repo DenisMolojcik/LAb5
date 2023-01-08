@@ -1,0 +1,78 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<Doctor>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Докторы</h1>
+
+<p>
+    <a asp-action="Create">Добавить доктора</a>
+</p>
+@using (Html.BeginForm())
+{
+    <p>Введите имя доктора: </p>
+    @Html.TextBox("searchDoctorName", ViewBag.CurrentFilter as string)
+    <p><input type="submit" value="Отправить" /></p>
+}
+<a asp-action="Index" asp-route-reset="true">
+    Сбросить
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDoctor="@ViewBag.DocName">
+                    ФИО
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDoctor="@ViewBag.DocAge">
+                    Возраст
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDoctor="@ViewBag.DocGender">
+                    Пол
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortStateDoctor="@ViewBag.DocPosition">
+                    Должность
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DoctorId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.DoctorId">Подробности</a> |
+                <a asp-action="Delete" asp-route-id="@item.DoctorId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortStateDoctor = ViewBag.CurrentSort, currentFilter=ViewBag.CurrentFilter }), new PagedListRenderOptions {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }})

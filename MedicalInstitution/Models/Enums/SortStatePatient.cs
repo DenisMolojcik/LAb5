@@ -1,0 +1,29 @@
+﻿namespace MedicalInstitution.Models.Enums
+{
+    public enum SortStatePatient
+    {
+        Default,
+        SurnameAsc,
+        SurnameDesc,
+        NameAsc,
+        NameDesc,
+        LastNameAsc,
+        LastNameDesc,
+        AgeAsc,
+        AgeDesc,
+        GenderAsc,
+        GenderDesc,
+        PhoneNumberAsc,
+        PhoneNumberDesc,
+        DateHospitalisationAsc,
+        DateHospitalisationDesc,
+        DateDischargeAsc,
+        DateDischargeDesc,
+        DiagnosAsc,
+        DiagnosDesc,
+        DepartmentAsc,
+        DepartmentDesc,
+        ResultTreatmentAsc,
+        ResultTreatmentDesc,
+    }
+}

@@ -1,0 +1,42 @@
+﻿@model MedicalInstitution.Models.Disease
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Подроьности</h1>
+
+<div>
+    <h4>Disease</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Symptom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Symptom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Consequence)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Consequence)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DiseaseId">Изменить</a> |
+    <a asp-action="Index">Вернуться</a>
+</div>
